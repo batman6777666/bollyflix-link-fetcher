@@ -7,27 +7,14 @@ const app = express()
 const PORT = process.env.PORT || 5000
 
 app.use(cors({
-    origin: function (origin, callback) {
-        // Allow requests with no origin (like mobile apps, Postman, curl)
-        if (!origin) return callback(null, true);
-
-        const allowedOrigins = [
-            'http://localhost:3000',
-            'http://localhost:5173',
-            'http://127.0.0.1:3000',
-            // Add your Cloudflare Pages URL here after deployment
-            // Example: 'https://bollyflix-extractor.pages.dev'
-            /\.pages\.dev$/,     // Allow ALL Cloudflare Pages subdomains
-            /\.cloudflare\.com$/ // Allow Cloudflare domains
-        ];
-
-        const allowed = allowedOrigins.some(o =>
-            typeof o === 'string' ? o === origin : o.test(origin)
-        );
-
-        callback(null, allowed || process.env.NODE_ENV !== 'production');
-    },
-    credentials: true
+    origin: [
+        'http://localhost:3000',
+        'http://localhost:5173',
+        'http://127.0.0.1:3000',
+        'https://bollyflix-link-fetcher.pages.dev'
+    ],
+    methods: ['GET', 'POST'],
+    credentials: false
 }))
 app.use(express.json())
 
